@@ -3,146 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Interactive Desktop Portfolio</title>
     <style>
         :root {
             --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text: #f8fafc;
             --accent: #38bdf8;
         }
         body {
             background-color: var(--bg);
-            color: var(--text);
-            font-family: system-ui, sans-serif;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            color: #000000;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        /* Profile Section */
-        .profile {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .pfp {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            object-fit: cover;
-        }
-        /* Filter Buttons */
-        .filters {
+
+        /* 1. VISUAL DESK WRAPPER CONTAINER */
+        .desk-environment {
+            position: relative;
+            width: 100%;
+            height: 85vh; /* Standard desktop viewfinder window */
+            min-height: 600px;
+            /* REPLACE WITH YOUR DESK DRAWING LINK */
+            background: url('your-desk-background.png') no-repeat center center;
+            background-size: cover;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
+            align-items: center;
+            overflow: hidden;
         }
-        .filter-btn {
-            background: var(--card-bg);
-            color: var(--text);
-            border: 1px solid #334155;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
+
+        /* 2. OVERLAY MONITOR LAYER */
+        .monitor-frame {
+            position: relative;
+            width: 80%;
+            max-width: 900px;
+            aspect-ratio: 16 / 10;
+            /* REPLACE WITH YOUR MONITOR BEZEL/FRAME DRAWING LINK */
+            background: url('your-monitor-drawing.png') no-repeat center center;
+            background-size: contain;
+            padding: 2.5%; /* Generates organic padding inside drawing frames */
+            box-sizing: border-box;
         }
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
+
+        /* 3. SCREEN DISP - LAYER FOR YOUR HANDDRAWN WALLPAPER */
+        .screen-display {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            /* REPLACE WITH YOUR CUSTOM HANDDRAWN SCREEN BACKGROUND DRAWING */
+            background: url('your-screen-wallpaper.png') no-repeat center center;
+            background-size: cover;
+            border-radius: 4px;
+            overflow: hidden;
         }
-        /* Project Grid */
-        .grid {
+
+        /* 4. WINDOWS START SEARCH POPUP FRAME (1/3 width, 2/3 height) */
+        .start-menu {
+            position: absolute;
+            bottom: 40px; /* Sits directly above taskbar */
+            left: 10px;
+            width: 33.33%;
+            height: 66.66%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* Top Half - Bio & Profile Metadata */
+        .start-profile {
+            height: 50%;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .start-pfp {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+        .start-profile h2 {
+            margin: 0 0 4px 0;
+            font-size: 1.1rem;
+        }
+        .start-profile p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: #475569;
+            line-height: 1.3;
+        }
+        .cv-link-btn {
+            margin-top: auto;
+            font-size: 0.75rem;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-decoration: none;
+        }
+
+        /* Bottom Half - Auto-scaling Interactive Project Squares */
+        .start-tiles {
+            height: 50%;
+            padding: 12px;
+            box-sizing: border-box;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            /* Auto-fit dynamically shrinks/grows squares depending on length */
+            grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+            grid-auto-rows: 1fr;
+            gap: 8px;
+            overflow-y: auto;
+        }
+        .project-square {
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            padding: 4px;
+        }
+        /* Hover microinteraction expansion effect */
+        .project-square:hover {
+            transform: scale(1.15);
+            z-index: 15;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            background: var(--accent);
+        }
+        .project-square .tile-icon {
+            font-size: 1.4rem;
+        }
+
+        /* Mock Windows Taskbar */
+        .taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35px;
+            background: rgba(241, 245, 249, 0.9);
+            border-top: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            box-sizing: border-box;
+        }
+        .start-icon-btn {
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        /* 5. SEPARATE ACCESSIBLE WHITE GRID (BELOW THE ENVIRONMENT) */
+        .main-content {
+            background-color: #ffffff;
+            color: #1e293b;
+            padding: 60px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 25px;
         }
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid #334155;
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        .tag {
-            display: inline-block;
-            background: #334155;
-            font-size: 0.8rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-top: 10px;
+        .expanded-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Header Profile -->
-    <header class="profile">
-        <img src="https://placeholder.com" alt="Profile Picture" class="pfp">
-        <h1>me</h1>
-        <p>about me hgere </p>
-    </header>
+    <!-- Desk Viewport -->
+    <div class="desk-environment">
+        <!-- Layered Monitor Frame -->
+        <div class="monitor-frame">
+            <!-- OS Screen Real Estate -->
+            <div class="screen-display">
+                
+                <!-- Windows Search UI Module -->
+                <div class="start-menu">
+                    <!-- Top Half: Personal Info -->
+                    <div class="start-profile">
+                        <img src="https://placeholder.com" alt="Avatar" class="start-pfp">
+                        <h2>Your Name</h2>
+                        <p>Blending software engineering, scientific data research, & digital concept illustration.</p>
+                        <!-- Target target links straight to your secondary CV file -->
+                        <a href="cv.html" class="cv-link-btn">Open CV.pdf</a>
+                    </div>
+                    
+                    <!-- Bottom Half: Auto-Sizing Fluid Grid Tiles -->
+                    <div class="start-tiles">
+                        <a href="#coding-1" class="project-square" title="Neural Network Sandbox">
+                            <span class="tile-icon">🤖</span>
+                        </a>
+                        <a href="#research-1" class="project-square" title="UX Case Study">
+                            <span class="tile-icon">🔬</span>
+                        </a>
+                        <a href="#art-1" class="project-square" title="Cyberpunk Cityscapes">
+                            <span class="tile-icon">🎨</span>
+                        </a>
+                        <a href="#coding-2" class="project-square" title="Shader Engine">
+                            <span class="tile-icon">💻</span>
+                        </a>
+                        <a href="#research-2" class="project-square" title="Data Visualization">
+                            <span class="tile-icon">📊</span>
+                        </a>
+                    </div>
+                </div>
 
-    <!-- 2. Interactive Filter Bar -->
-    <div class="filters">
-        <button class="filter-btn active" onclick="filterProjects('all')">All</button>
-        <button class="filter-btn" onclick="filterProjects('coding')">Cdoding</button>
-        <button class="filter-btn" onclick="filterProjects('research')"> Research</button>
-        <button class="filter-btn" onclick="filterProjects('art')">art</button>
+                <!-- OS Desktop Taskbar -->
+                <div class="taskbar">
+                    <span class="start-icon-btn">🪟</span>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <!-- 3. Projects Grid -->
-    <div class="grid" id="project-grid">
-        <div class="card" data-category="coding">
-            <div class="icon">🤖</div>
-            <h3>Neural Network Sandbox</h3>
-            <p>A browser-based tool built to visualize real-time machine learning paths.</p>
-            <span class="tag">Coding</span>
+    <!-- Scrolling White Document Layout Section -->
+    <main class="main-content">
+        <div class="container">
+            <h2>Detailed Documentation Index</h2>
+            <p>Click items on the monitor interface above to quickly jump to specific code logs, paper links, or process galleries below.</p>
+            
+            <div class="details-grid">
+                <div class="expanded-card" id="coding-1">
+                    <h3>🤖 Neural Network Sandbox</h3>
+                    <p>Comprehensive description detailing script architecture, tech stack models, and deployment configurations.</p>
+                </div>
+                <div class="expanded-card" id="research-1">
+                    <h3>🔬 UX Case Study</h3>
+                    <p>Research method breakdowns, user cohort tracking analytics, and concluding design reports.</p>
+                </div>
+                <div class="expanded-card" id="art-1">
+                    <h3>🎨 Cyberpunk Cityscapes</h3>
+                    <p>High-resolution canvas gallery containing final visual concepts and early layer thumbnails.</p>
+                </div>
+            </div>
         </div>
-
-        <div class="card" data-category="research">
-            <div class="icon">📊</div>
-            <h3>UX Case Study</h3>
-            <p>Academic paper analyzing user behavior models in immersive software layouts.</p>
-            <span class="tag">Research</span>
-        </div>
-
-        <div class="card" data-category="art">
-            <div class="icon">🖼️</div>
-            <h3>Cyberpunk Cityscapes</h3>
-            <p>A collection of concept art illustration assets designed in digital 2D environments.</p>
-            <span class="tag">Art</span>
-        </div>
-    </div>
-
-    <!-- 4. Filter Script Logic -->
-    <script>
-        function filterProjects(category) {
-            // Update active button color
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Hide or show cards based on tags
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
+    </main>
 
 </body>
 </html>
