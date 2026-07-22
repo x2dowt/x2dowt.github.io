@@ -3,119 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative & Tech Portfolio</title>
+    <title>My Portfolio</title>
     <style>
         :root {
-            --bg-tech: #0d1117;
-            --text-tech: #58a6ff;
-            --bg-art: #faf4eb;
-            --text-art: #d946ef;
-            --font-tech: 'Courier New', monospace;
-            --font-art: 'Helvetica Neue', sans-serif;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --accent: #38bdf8;
         }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: system-ui, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
-
-        /* Split Screen Container */
-        .split-container {
-            display: flex;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        /* Shared Side Styling */
-        .side {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: flex 0.5s ease, filter 0.3s ease;
-            cursor: pointer;
-            padding: 40px;
-            box-sizing: border-box;
+        /* Profile Section */
+        .profile {
             text-align: center;
+            margin-bottom: 50px;
         }
-
-        /* Tech Side Customization */
-        .tech-side {
-            background-color: var(--bg-tech);
-            color: var(--text-tech);
-            font-family: var(--font-tech);
-            border-right: 2px solid #30363d;
+        .pfp {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            object-fit: cover;
         }
-
-        /* Art Side Customization */
-        .art-side {
-            background-color: var(--bg-art);
-            color: var(--text-art);
-            font-family: var(--font-art);
+        /* Filter Buttons */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
         }
-
-        /* Interactive Hover Focus */
-        .side:hover {
-            flex: 1.5;
-        }
-
-        .side:not(:hover) {
-            filter: brightness(0.7);
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            max-width: 400px;
-            color: inherit;
-            opacity: 0.9;
-        }
-
-        .btn {
-            margin-top: 30px;
-            padding: 12px 24px;
-            border: 2px solid currentColor;
-            background: transparent;
-            color: inherit;
-            font-family: inherit;
-            font-weight: bold;
+        .filter-btn {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            border-radius: 20px;
             cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s;
+            font-weight: bold;
+            transition: 0.2s;
         }
-
-        .tech-side .btn:hover {
-            background: rgba(88, 166, 255, 0.1);
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
         }
-
-        .art-side .btn:hover {
-            background: rgba(217, 70, 239, 0.1);
+        /* Project Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #334155;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .tag {
+            display: inline-block;
+            background: #334155;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="split-container">
-        <!-- Tech Track -->
-        <div class="side tech-side" onclick="location.href='#tech-projects'">
-            <h1>&lt;DEVELOPER&gt;</h1>
-            <p>bruh.</p>
-            <span class="btn">View Repositories</span>
+    <!-- 1. Header Profile -->
+    <header class="profile">
+        <img src="https://placeholder.com" alt="Profile Picture" class="pfp">
+        <h1>me</h1>
+        <p>about me hgere </p>
+    </header>
+
+    <!-- 2. Interactive Filter Bar -->
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+        <button class="filter-btn" onclick="filterProjects('coding')">Cdoding</button>
+        <button class="filter-btn" onclick="filterProjects('research')"> Research</button>
+        <button class="filter-btn" onclick="filterProjects('art')">art</button>
+    </div>
+
+    <!-- 3. Projects Grid -->
+    <div class="grid" id="project-grid">
+        <div class="card" data-category="coding">
+            <div class="icon">🤖</div>
+            <h3>Neural Network Sandbox</h3>
+            <p>A browser-based tool built to visualize real-time machine learning paths.</p>
+            <span class="tag">Coding</span>
         </div>
 
-        <!-- Art Track -->
-        <div class="side art-side" onclick="location.href='#art-gallery'">
-            <h1>ARTIST</h1>
-            <span class="btn">View Gallery</span>
+        <div class="card" data-category="research">
+            <div class="icon">📊</div>
+            <h3>UX Case Study</h3>
+            <p>Academic paper analyzing user behavior models in immersive software layouts.</p>
+            <span class="tag">Research</span>
+        </div>
+
+        <div class="card" data-category="art">
+            <div class="icon">🖼️</div>
+            <h3>Cyberpunk Cityscapes</h3>
+            <p>A collection of concept art illustration assets designed in digital 2D environments.</p>
+            <span class="tag">Art</span>
         </div>
     </div>
+
+    <!-- 4. Filter Script Logic -->
+    <script>
+        function filterProjects(category) {
+            // Update active button color
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Hide or show cards based on tags
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
