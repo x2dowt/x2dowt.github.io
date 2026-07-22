@@ -30,22 +30,41 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
         /* 2. OVERLAY MONITOR LAYER */
         .monitor-frame {
             position: relative;
-            width: 80%;
+            width: 90%;
             max-width: 900px;
             aspect-ratio: 16 / 10;
             /* AUTOMATIC ONLINE PLACEHOLDER FOR YOUR MONITOR FRAME */
             background: rgba(30, 41, 59, 0.9);
-            border: 20px solid #1e293b;
+            border: 14px solid #1e293b;
             border-radius: 12px;
             box-sizing: border-box;
-            padding: 10px;
+            padding: 2px;
+            z-index: 2;
+            transition: all 0.3s ease;
         }
-
+        
+        /* MONITOR STAND */
+        .monitor-stand-neck {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(90deg, #334155, #1e293b, #334155);
+            z-index: 1;
+        }
+        .monitor-stand-base {
+            width: 180px;
+            height: 10px;
+            background: #1e293b;
+            border-radius: 4px 4px 0 0;
+            z-index: 1;
+        }
+        
         /* 3. SCREEN DISP - LAYER FOR YOUR HANDDRAWN WALLPAPER */
         .screen-display {
             position: relative;
@@ -56,6 +75,8 @@
             background-size: cover;
             border-radius: 4px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* 4. WINDOWS START SEARCH POPUP FRAME (Side-by-Side) */
@@ -74,7 +95,9 @@
             overflow: hidden;
             z-index: 10;
         }
-
+        .start-menu.open {
+            display: flex;
+        }
         /* Left Side Panel: Profile, Bio, and CV Actions */
         .start-left-panel {
             width: 50%;
