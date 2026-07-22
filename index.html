@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative & Tech Portfolio</title>
+    <style>
+        :root {
+            --bg-tech: #0d1117;
+            --text-tech: #58a6ff;
+            --bg-art: #faf4eb;
+            --text-art: #d946ef;
+            --font-tech: 'Courier New', monospace;
+            --font-art: 'Helvetica Neue', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Split Screen Container */
+        .split-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Shared Side Styling */
+        .side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: flex 0.5s ease, filter 0.3s ease;
+            cursor: pointer;
+            padding: 40px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Tech Side Customization */
+        .tech-side {
+            background-color: var(--bg-tech);
+            color: var(--text-tech);
+            font-family: var(--font-tech);
+            border-right: 2px solid #30363d;
+        }
+
+        /* Art Side Customization */
+        .art-side {
+            background-color: var(--bg-art);
+            color: var(--text-art);
+            font-family: var(--font-art);
+        }
+
+        /* Interactive Hover Focus */
+        .side:hover {
+            flex: 1.5;
+        }
+
+        .side:not(:hover) {
+            filter: brightness(0.7);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            max-width: 400px;
+            color: inherit;
+            opacity: 0.9;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 12px 24px;
+            border: 2px solid currentColor;
+            background: transparent;
+            color: inherit;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .tech-side .btn:hover {
+            background: rgba(88, 166, 255, 0.1);
+        }
+
+        .art-side .btn:hover {
+            background: rgba(217, 70, 239, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="split-container">
+        <!-- Tech Track -->
+        <div class="side tech-side" onclick="location.href='#tech-projects'">
+            <h1>&lt;DEVELOPER&gt;</h1>
+            <p>Building clean, scalable code architectures and custom software systems.</p>
+            <span class="btn">View Repositories</span>
+        </div>
+
+        <!-- Art Track -->
+        <div class="side art-side" onclick="location.href='#art-gallery'">
+            <h1>ARTIST</h1>
+            <p>Creating expressive visual narratives, UI/UX designs, and digital assets.</p>
+            <span class="btn">View Gallery</span>
+        </div>
+    </div>
+
+</body>
+</html>
