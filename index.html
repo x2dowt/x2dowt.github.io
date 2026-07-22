@@ -58,61 +58,140 @@
         }
 
         /* 4. WINDOWS START SEARCH POPUP FRAME (1/3 width, 2/3 height) */
-        .start-menu {
-            position: absolute;
-            bottom: 40px; /* Sits directly above taskbar */
-            left: 10px;
-            width: 33.33%;
-            height: 66.66%;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.4);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 10;
-        }
+       
 
         /* Top Half - Bio & Profile Metadata */
-        .start-profile {
-            height: 50%;
-            padding: 15px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-        .start-pfp {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            object-fit: cover;
-            margin-bottom: 8px;
-        }
-        .start-profile h2 {
-            margin: 0 0 4px 0;
-            font-size: 1.1rem;
-        }
-        .start-profile p {
-            margin: 0;
-            font-size: 0.75rem;
-            color: #475569;
-            line-height: 1.3;
-        }
-        .cv-link-btn {
-            margin-top: auto;
-            font-size: 0.75rem;
-            background: #0f172a;
-            color: #ffffff;
-            padding: 4px 12px;
-            border-radius: 12px;
-            text-decoration: none;
-        }
+       <style>
+    /* Updated Main Popup Framework: Side-by-Side Split */
+    .start-menu {
+        position: absolute;
+        bottom: 40px; 
+        left: 10px;
+        width: 45%; /* Slightly widened to gracefully host side-by-side elements */
+        height: 66.66%;
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(12px);
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.4);
+        display: flex; /* Arranges the left and right panels horizontally */
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    /* Left Side Panel: Profile, Bio, and CV Actions */
+    .start-left-panel {
+        width: 50%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border-right: 1px solid rgba(0,0,0,0.1);
+        justify-content: center;
+    }
+    .start-pfp {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        object-fit: cover;
+        margin-bottom: 12px;
+    }
+    .start-left-panel h2 {
+        margin: 0 0 6px 0;
+        font-size: 1.2rem;
+    }
+    .start-left-panel p {
+        margin: 0 0 15px 0;
+        font-size: 0.8rem;
+        color: #475569;
+        line-height: 1.4;
+    }
+    .cv-link-btn {
+        font-size: 0.8rem;
+        background: #0f172a;
+        color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.2s;
+    }
+    .cv-link-btn:hover {
+        background: var(--accent);
+        color: #0f172a;
+    }
+
+    /* Right Side Panel: Grid Layout for Auto-Scaling Tiles */
+    .start-right-panel {
+        width: 50%;
+        height: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+        display: grid;
+        /* Aligns images/icons into flexible, dynamic columns */
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        grid-auto-rows: 50px;
+        gap: 10px;
+        align-content: center;
+        overflow-y: auto;
+    }
+    .project-square {
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+        text-decoration: none;
+        overflow: hidden;
+    }
+    .project-square:hover {
+        transform: scale(1.18);
+        z-index: 15;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    /* Styles images tucked neatly inside the interactive square tiles */
+    .tile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+
+<!-- Copy and Paste this directly into the middle of your .screen-display element -->
+<div class="start-menu">
+    <!-- Left Panel: Text & Profiles -->
+    <div class="start-left-panel">
+        <!-- Relative folder path to your profile picture asset -->
+        <img src="assets/profile.jpg" alt="Avatar" class="start-pfp">
+        <h2>Your Name</h2>
+        <p>Blending software engineering, scientific data research, and digital concept illustration.</p>
+        <a href="cv.html" class="cv-link-btn">Open CV</a>
+    </div>
+    
+    <!-- Right Panel: Grid of Project Visual Asset Cards -->
+    <div class="start-right-panel">
+        <a href="#coding-1" class="project-square" title="Neural Network Sandbox">
+            <img src="assets/project1-icon.png" alt="Project 1" class="tile-img">
+        </a>
+        <a href="#research-1" class="project-square" title="UX Case Study">
+            <img src="assets/project2-icon.png" alt="Project 2" class="tile-img">
+        </a>
+        <a href="#art-1" class="project-square" title="Cyberpunk Cityscapes">
+            <img src="assets/project3-icon.png" alt="Project 3" class="tile-img">
+        </a>
+        <a href="#coding-2" class="project-square" title="Shader Engine">
+            <img src="assets/project4-icon.png" alt="Project 4" class="tile-img">
+        </a>
+    </div>
+</div>
+
 
         /* Bottom Half - Auto-scaling Interactive Project Squares */
         .start-tiles {
