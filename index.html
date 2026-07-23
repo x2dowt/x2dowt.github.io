@@ -3,362 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ellen Sehyun Kim</title>
+    <title>My Portfolio</title>
     <style>
         :root {
             --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
             --accent: #38bdf8;
-             --taskbar-bg: rgba(241, 245, 249, 0.85);
         }
         body {
             background-color: var(--bg);
-            color: #000000;
-            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            font-family: system-ui, sans-serif;
             margin: 0;
             padding: 0;
-        }
-
-        /* 1. VISUAL DESK WRAPPER CONTAINER */
-        .desk-environment {
             position: relative;
-            width: 100%;
-            height: 90vh; 
-            min-height: 650px;
-            /* AUTOMATIC ONLINE PLACEHOLDER FOR YOUR DESK DRAWING */
-            background: url('Pages/assets/Untitled_Artwork.png') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* 2. OVERLAY MONITOR LAYER */
-        .monitor-frame {
-            position: relative;
-            width: 80%;
-            max-width: 900px;
-            aspect-ratio: 16 / 10;
-            /* AUTOMATIC ONLINE PLACEHOLDER FOR YOUR MONITOR FRAME */
-            background: rgba(30, 41, 59, 0.9);
-            border: 20px solid #1e293b;
-            border-radius: 12px 12px 0 0;
-            border-bottom: 25px solid #1e293b;
-            box-sizing: border-box;
-            padding: 2px;
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-        
-        /* MONITOR STAND */
-        .monitor-stand-neck {
-            width: 70px;
-            height: 60px;
-            background: linear-gradient(90deg, #334155, #1e293b, #334155);
-            z-index: 1;
-            box-shadow: inset 0 10px 10px rgba(0,0,0,0.3);
-        }
-       .monitor-stand-base {
-            width: 220px;
-            height: 12px;
-            background: #1e293b;
-            border-radius: 4px 4px 0 0;
-            border-bottom: 4px solid #0f172a;
-            z-index: 1;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
-        }
-        
-        /* 3. SCREEN DISP - LAYER FOR YOUR HANDDRAWN WALLPAPER */
-        .screen-display {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            /* AUTOMATIC ONLINE PLACEHOLDER FOR YOUR SCREEN WALLPAPER */
-            background: url('Pages/assets/testing.png') no-repeat center center;
-            background-size: cover;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        /* 1. Animated Particle Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* 4. WINDOWS START SEARCH POPUP FRAME (Side-by-Side) */
-
-        .start-menu {
-            position: absolute;
-            bottom: 50px; 
-            left: 10px;
-            width: 55%; 
-            height: 65%;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.4);
-            display: none; /* Hidden by default, toggled by the start button */
-            overflow: hidden;
-            z-index: 10;
-        }
-        .start-menu.open {
-            display: flex;
-        }
-        /* Left Side Panel: Profile, Bio, and CV Actions */
-        .start-left-panel {
-            width: 50%;
-            height: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* Profile Top Section */
+        .profile {
             text-align: center;
-            border-right: 1px solid rgba(0,0,0,0.1);
-            justify-content: center;
+            padding: 60px 20px 40px 20px;
         }
-        .start-pfp {
-            width: 75px;
-            height: 75px;
+        .pfp {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 2px solid var(--accent);
+            border: 3px solid var(--accent);
             object-fit: cover;
-            margin-bottom: 12px;
         }
-        .start-left-panel h2 {
-            margin: 0 0 6px 0;
-            font-size: 1.2rem;
-        }
-        .start-left-panel p {
-            margin: 0 0 15px 0;
-            font-size: 0.8rem;
-            color: #475569;
-            line-height: 1.4;
-        }
-        .cv-link-btn {
-            font-size: 0.8rem;
-            background: #0f172a;
-            color: #ffffff;
-            padding: 6px 16px;
-            border-radius: 12px;
+        .cv-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: var(--bg);
             text-decoration: none;
             font-weight: bold;
-            transition: background 0.2s;
+            border-radius: 20px;
+            transition: opacity 0.2s;
         }
-        .cv-link-btn:hover {
-            background: var(--accent);
-            color: #0f172a;
-        }
-
-        /* Right Side Panel: Grid Layout for Auto-Scaling Tiles */
-        .start-right-panel {
-            width: 50%;
-            height: 100%;
-            padding: 15px;
-            box-sizing: border-box;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-            grid-auto-rows: 60px;
-            gap: 10px;
-            align-content: center;
-            overflow-y: auto;
-        }
-        .project-square {
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
-            text-decoration: none;
-            overflow: hidden;
-        }
-        .project-square:hover {
-            transform: scale(1.18);
-            z-index: 15;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
-        .tile-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .cv-btn:hover {
+            opacity: 0.9;
         }
 
-           /* MICROSOFT STYLE TASKBAR */
-        .taskbar {
-            margin-top: auto;
-            width: 100%;
-            height: 42px;
-            background: var(--taskbar-bg);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255,255,255,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0 12px;
-            box-sizing: border-box;
-            gap: 12px;
-            z-index: 11;
-        }
-        .start-icon-btn {
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: transform 0.1s;
-            display: flex;
-            align-items: center;
-        }
-        .start-icon-btn:hover {
-            transform: scale(1.1);
-        }
-
-        
-        /* Mock search askbar */
-        .search-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 240px;
-            height: 30px;
-        }
-        .taskbar-search {
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            border: 1px solid rgba(0,0,0,0.15);
-            background: rgba(255, 255, 255, 0.85);
-            padding: 0 15px 0 35px;
-            box-sizing: border-box;
-            font-size: 0.85rem;
-            outline: none;
-            transition: background 0.2s, border 0.2s;
-        }
-        .taskbar-search:focus {
-            background: #ffffff;
-            border-color: var(--accent);
-        }
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            font-size: 0.9rem;
-            pointer-events: none;
-
-        /* NEW: TASKBAR APP ICONS CONTAINER */
-        .taskbar-apps {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: 10px;
-        }
-        .app-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            transition: background 0.2s, transform 0.1s;
-        }
-        .app-icon:hover {
-            background: rgba(0, 0, 0, 0.08);
-            transform: translateY(-2px);
-        }
-
-        /* 5. SEPARATE ACCESSIBLE WHITE GRID (BELOW THE ENVIRONMENT) */
+        /* 2. White Fill Section (Wraps everything below bio) */
         .main-content {
             background-color: #ffffff;
             color: #1e293b;
-            padding: 60px 20px;
+            padding: 50px 20px;
+            min-height: 100vh;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
         }
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
-        .details-grid {
+
+        /* Adjusted Filters for White Section */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .filter-btn {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--bg);
+            color: #ffffff;
+            border-color: var(--bg);
+        }
+
+        /* Adjusted Cards for White Section */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
         }
-        .expanded-card {
-            background: #f8fafc;
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .tag {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Desk Viewport -->
-    <div class="desk-environment">
-        <!-- Layered Monitor Frame -->
-        <div class="monitor-frame">
-            <!-- OS Screen Real Estate -->
-            <div class="screen-display">
-                
-                <!-- Windows Search UI Module -->
-                <div class="start-menu">
-                    <!-- Left Panel: Text & Profiles -->
-                    <div class="start-left-panel">
-                        <!-- AUTOMATIC PLACEHOLDER FOR AVATAR -->
-                        <img src="https://picsum.photos" alt="Avatar" class="start-pfp">
-                        <h2>Ellen Sehyun Kime</h2>
-                        <p>I am a BSc Honors Psychology student at the University of Alberta with a CS background working on my thesis on ML. When I’m not studying, I’m a figure skater/coach, and I also like to draw!</p>
-                        <a href="cv.html" class="cv-link-btn">Open CV</a>
-                    </div>
-                    
-                    <!-- Right Panel: Grid of Project Visual Asset Cards -->
-                    <div class="start-right-panel">
-                        <!-- AUTOMATIC PLACEHOLDERS FOR PROJECT SQUARES -->
-                        <a href="#coding-1" class="project-square" title="Figure Skating Motion PRoject">
-                            <img src="https://picsum.photos" alt="Project 1" class="tile-img">
-                        </a>
-                        <a href="#research-1" class="project-square" title="Migration Data Challenge">
-                            <img src="https://picsum.photos" alt="Project 2" class="tile-img">
-                        </a>
-                        <a href="#art-1" class="project-square" title="Congenital Heart Defects">
-                            <img src="https://picsum.photos" alt="Project 3" class="tile-img">
-                        </a>
-                        <a href="#coding-2" class="project-square" title="Shader Engine">
-                            <img src="https://picsum.photos" alt="Project 4" class="tile-img">
-                        </a>
-                    </div>
-                </div>
+    <!-- Canvas for Floating Particle Background Animation -->
+    <canvas id="bg-canvas"></canvas>
 
-                <!-- OS Desktop Taskbar -->
-                <div class="taskbar">
-                    <span class="start-icon-btn">🪟</span>
-                </div>
+    <!-- Top Dark Hero Section -->
+    <header class="profile">
+        <img src="https://placeholder.com" alt="Profile Picture" class="pfp">
+        <h1>Your Name</h1>
+        <p>A hybrid creator blending software engineering, scientific research, and digital art.</p>
+        <!-- Link to your CV file or external link -->
+        <a href="cv.html" class="cv-btn">View My CV</a>
+    </header>
 
-            </div>
-        </div>
-    </div>
-
-    <!-- Scrolling White Document Layout Section -->
+    <!-- Bottom White Content Block -->
     <main class="main-content">
         <div class="container">
-            <h2>Detailed Documentation Index</h2>
-            <p>Click items on the monitor interface above to quickly jump to specific code logs, paper links, or process galleries below.</p>
             
-            <div class="details-grid">
-                <div class="expanded-card" id="coding-1">
-                    <h3>Congenital HEart</h3>
-                    <p>making stuf fup </p>
+            <!-- Interactive Filter Bar -->
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+                <button class="filter-btn" onclick="filterProjects('coding')">💻 Coding</button>
+                <button class="filter-btn" onclick="filterProjects('research')">🔬 Research</button>
+                <button class="filter-btn" onclick="filterProjects('art')">🎨 Art</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid">
+                <div class="card" data-category="coding">
+                    <div class="icon">🤖</div>
+                    <h3>Neural Network Sandbox</h3>
+                    <p>A browser-based tool built to visualize real-time machine learning paths.</p>
+                    <span class="tag">Coding</span>
                 </div>
-                <div class="expanded-card" id="research-1">
-                    <h3>Figure machine project </h3>
-                    <p>look at motion + identify wiht ML </p>
+
+                <div class="card" data-category="research">
+                    <div class="icon">📊</div>
+                    <h3>UX Case Study</h3>
+                    <p>Academic paper analyzing user behavior models in immersive software layouts.</p>
+                    <span class="tag">Research</span>
                 </div>
-                <div class="expanded-card" id="art-1">
-                    <h3>numba 3</h3>s</h3>
-                    <p>prohject number thrih</p>
+
+                <div class="card" data-category="art">
+                    <div class="icon">🖼️</div>
+                    <h3>Cyberpunk Cityscapes</h3>
+                    <p>A collection of concept art illustration assets designed in digital 2D environments.</p>
+                    <span class="tag">Art</span>
                 </div>
             </div>
+
         </div>
     </main>
+
+    <script>
+        // 1. Grid Filtering Logic
+        function filterProjects(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 2. Background Particle Animation Logic
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.3)'; // Var accent with low opacity
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 
 </body>
 </html>
